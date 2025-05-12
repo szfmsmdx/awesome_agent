@@ -9,9 +9,10 @@ from api.response import ProcessResponse
 from llm.prompt import prompt
 from utils.parse import BaseOutputParser
 from config import Config
+from typing import List
 
 CFG = Config()
-class agent:
+class Agent:
     def __init__(self):
         self.llm = ChatOpenAI(
             streaming=False,
@@ -42,14 +43,14 @@ class agent:
                 message="解析关键词失败"
             )
         
-        # 检验 res 是否合规
-        res = self.parse.parse_prompt_response(res)    
-        if len(res) == 0:
+        # 检验一下 res 是否合规
+        clean_res = self.parse.parse_prompt_response(res)    
+        if len(clean_res) == 0:
             return ProcessResponse(
                 code=202,
                 message=["解析关键词失败"]
             )
-        elif len(res) > 1:
+        elif len(clean_res) > 1:
             return ProcessResponse(
                 code=203,
                 message=["关键词生成错误"]
@@ -57,6 +58,9 @@ class agent:
         else:
             return ProcessResponse(
                 code=200,
-                message=res
+                message=clean_res[0]
             )        
-    
+
+    def search_keyword(self, keywords:List[str]):
+        # TODO:search keywords...
+        pass
