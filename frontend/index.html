@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Agent Search</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Optional: Add a favicon -->
+    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>GitHub Repository Search</h1>
+            <button id="themeToggleButton" class="theme-toggle-button">Toggle Theme</button>
+        </header>
+        <p>Enter a description or topic to find relevant GitHub repositories.</p>
+        <div class="search-area">
+            <textarea id="searchInput" placeholder="e.g., python web framework with async support"></textarea>
+            <button id="searchButton">Search</button>
+        </div>
+        <div id="loadingIndicator" style="display: none;">Searching...</div>
+        <h2>Results:</h2>
+        <div id="resultsArea">
+            <p>No results yet. Try a search!</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

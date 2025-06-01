@@ -98,6 +98,7 @@ class Agent:
         if not repos:
             return ProcessResponse(code=205, message=["No repositories found"])
             
+        logging.info(f"搜索成功，找到 {len(repos)} 个仓库")
         repo_details = []
         for repo in repos:
             repo_info = {
