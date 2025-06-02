@@ -9,20 +9,16 @@ import uvicorn
 CFG = Config()
 app = FastAPI()
 
-# Add CORS middleware
-# Origins that are allowed to make cross-origin requests.
-# You can use ["*"] to allow all origins, or be more specific
-# e.g., ["http://localhost:8000", "http://127.0.0.1:8000"] if your frontend is served there.
 origins = [
-    "*"  # For development, allow all. For production, restrict this.
+    "*"  
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],  
+    allow_headers=["*"], 
 )
 
 app.include_router(router)

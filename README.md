@@ -5,6 +5,7 @@
 替换该文件中相应的 api key 和地址
 
 ## 部署步骤
+### 方法一
 1. pip 安装相应的库文件
 ```py
 # conda activate your_env
@@ -25,4 +26,11 @@ kill  xxxx      # kill 进程号
 
 lsof -i:8080    # 结束前端进程
 kill xxxx
+```
+
+### 方法二
+25/6/2 添加 flask 支持  
+在安装相关库后直接运行下列命令即可
+```
+python app.py
 ```

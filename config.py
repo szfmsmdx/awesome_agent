@@ -1,8 +1,7 @@
 import os
 from utils.singleton import Singleton
 from dotenv import load_dotenv
-load_dotenv()  # 默认会寻找当前目录下的 .env 文件
-# print(os.getenv('YOUR_VARIABLE'))
+load_dotenv()
 
 class Config(metaclass=Singleton):
     def __init__(self) -> None:
@@ -15,3 +14,5 @@ class Config(metaclass=Singleton):
         self.host = "0.0.0.0"
         self.github_url = os.getenv('github_url')
         self.github_access_token = os.getenv('github_api_key')
+        self.app_host = "0.0.0.0"
+        self.app_port = 7111

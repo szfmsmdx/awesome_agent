@@ -35,7 +35,7 @@ class Agent:
     def get_keyword(self, text: str) -> ProcessResponse:
         logging.info("解析关键词及建议...")
         # Use the new prompt template
-        chat_prompt = PromptTemplate.from_template(prompt.get_keywords_and_suggestions_prompt)
+        chat_prompt = PromptTemplate.from_template(prompt().get_keywords_and_suggestions_prompt)
         output_parser = StrOutputParser() # We'll parse JSON manually
         chain = chat_prompt | self.llm | output_parser
         
@@ -43,8 +43,6 @@ class Agent:
             raw_res = chain.invoke({"text": text})
             logging.debug(f"LLM raw response for keywords: {raw_res}")
             
-            # Attempt to parse the JSON response
-            # The LLM might sometimes add markdown backticks around JSON
             cleaned_res_str = raw_res.strip().removeprefix("```json").removeprefix("```").removesuffix("```")
             
             parsed_res = json.loads(cleaned_res_str)
