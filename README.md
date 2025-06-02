@@ -14,10 +14,15 @@ pip install -r requirements.txt
 2. 起服务
 ```py
 nohup python main.py > output.log 2>&1 &
+cd frontend
+python -m http.server 8080  # 或其他端口
 ```
 
 3. 关闭服务
 ```py
 lsof -i:7111    # 或其他端口，获取进程号
 kill  xxxx      # kill 进程号
+
+lsof -i:8080    # 结束前端进程
+kill xxxx
 ```

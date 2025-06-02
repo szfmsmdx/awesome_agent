@@ -28,5 +28,18 @@ PT_PROMPT = """
 输入文本: {text}
 """
 
+GET_KEYWORDS_AND_SUGGESTIONS_PROMPT_TEMPLATE = """
+给定文本，提取出最能代表主要主题的主要关键词，并建议一些用户可能也感兴趣的关联关键词。
+请严格按照包含两个键的 JSON 对象格式返回结果："primary_keywords"（字符串列表）和"suggested_keywords"（字符串列表）。
+确保关键词简洁且相关。不要在 JSON 对象前后包含任何其他文本。
+如果你判断涉及到学术领域，请使用学术领域内的英文关键词。
+
+文本:
+{text}
+
+JSON 响应:
+"""
+
 class prompt:
     parse_text_prompt = PT_PROMPT
+    get_keywords_and_suggestions_prompt = GET_KEYWORDS_AND_SUGGESTIONS_PROMPT_TEMPLATE

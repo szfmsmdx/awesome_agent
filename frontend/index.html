@@ -14,15 +14,57 @@
             <h1>GitHub Repository Search</h1>
             <button id="themeToggleButton" class="theme-toggle-button">Toggle Theme</button>
         </header>
-        <p>Enter a description or topic to find relevant GitHub repositories.</p>
-        <div class="search-area">
-            <textarea id="searchInput" placeholder="e.g., python web framework with async support"></textarea>
-            <button id="searchButton">Search</button>
+
+        <div class="input-section">
+            <h2>1. Describe Your Desired Repository</h2>
+            <textarea id="textInput" placeholder="e.g., a lightweight python web framework with async support and good documentation"></textarea>
+            <button id="getKeywordsButton">Get Keywords & Suggestions</button>
+            <div id="keywordsLoadingIndicator" class="loading-indicator" style="display: none;">Fetching keywords...</div>
         </div>
-        <div id="loadingIndicator" style="display: none;">Searching...</div>
+
+        <div id="keywordManagementSection" style="display: none;">
+            <h2>2. Refine Keywords</h2>
+            <div class="keywords-area">
+                <label for="primaryKeywordsInput">Primary Keywords (edit as needed):</label>
+                <input type="text" id="primaryKeywordsInput" placeholder="Keywords, comma-separated">
+            </div>
+            <div id="suggestedKeywordsArea" class="suggested-keywords-area">
+                <label>Suggested Keywords (click to add):</label>
+                <div id="suggestedKeywordsContainer"></div>
+            </div>
+        </div>
+
+        <div id="advancedSearchSection" style="display: none;">
+            <h2>3. Advanced Search Filters</h2>
+            <div class="filters-grid">
+                <div>
+                    <label for="languageInput">Programming Language:</label>
+                    <input type="text" id="languageInput" placeholder="e.g., python, javascript">
+                </div>
+                <div>
+                    <label for="minStarsInput">Min Stars:</label>
+                    <input type="number" id="minStarsInput" placeholder="e.g., 100">
+                </div>
+                <div>
+                    <label for="maxStarsInput">Max Stars:</label>
+                    <input type="number" id="maxStarsInput" placeholder="e.g., 5000">
+                </div>
+                <div>
+                    <label for="updatedAfterInput">Updated After (YYYY-MM-DD):</label>
+                    <input type="text" id="updatedAfterInput" placeholder="e.g., 2023-01-01">
+                </div>
+                <div class="checkbox-filter">
+                    <input type="checkbox" id="excludeForksCheckbox">
+                    <label for="excludeForksCheckbox">Exclude Forks</label>
+                </div>
+            </div>
+            <button id="searchGitHubButton">Search GitHub</button>
+            <div id="searchLoadingIndicator" class="loading-indicator" style="display: none;">Searching GitHub...</div>
+        </div>
+        
         <h2>Results:</h2>
         <div id="resultsArea">
-            <p>No results yet. Try a search!</p>
+            <p>Enter a description and get keywords to start.</p>
         </div>
     </div>
     <script src="script.js"></script>
