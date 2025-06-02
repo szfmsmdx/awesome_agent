@@ -1,0 +1,4 @@
+llm_api_key = ""
+llm_url = ""
+github_url = "https://api.github.com/search/repositories"
+github_api_key = ""
