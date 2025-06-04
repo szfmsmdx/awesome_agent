@@ -4,7 +4,7 @@ import json
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
-
+import arxiv
 import requests
 
 from api.response import ProcessResponse
@@ -74,7 +74,7 @@ class Agent:
             logging.error(f"解析关键词时发生未知错误: {e}")
             return ProcessResponse(code=203, message=["An unexpected error occurred while parsing keywords."])
 
-    def search_keyword(self, 
+    def search_github(self, 
                        keywords: List[str], 
                        language: str = None,
                        min_stars: int = None,
@@ -191,3 +191,57 @@ class Agent:
             code=200,
             message=filtered_repos
         )
+
+    def search_arxiv(self, keywords: List[str], max_results: int = 10) -> ProcessResponse:
+        """
+        Search arXiv for papers based on keywords.
+        
+        Args:
+            keywords: List of keywords to search for
+            max_results: Maximum number of results to return (default 10)
+            
+        Returns:
+            ProcessResponse containing list of paper information
+        """
+        logging.info(f"搜索arXiv，关键词: {keywords}")
+        
+        if not keywords:
+            return ProcessResponse(code=400, message=["Keywords list cannot be empty for search."])
+
+        try:
+            # Construct the query string - join keywords with AND
+            query = ' AND '.join(f'all:"{kw}"' for kw in keywords)
+            
+            # Search arXiv
+            search = arxiv.Search(
+                query=query,
+                max_results=max_results,
+                sort_by=arxiv.SortCriterion.Relevance
+            )
+
+            papers = []
+            for result in search.results():
+                paper_info = {
+                    'title': result.title,
+                    'summary': result.summary,
+                    'authors': [author.name for author in result.authors],
+                    'published': result.published.strftime("%Y-%m-%d"),
+                    'pdf_url': result.pdf_url,
+                    'entry_id': result.entry_id,
+                    'primary_category': result.primary_category,
+                    'categories': result.categories,
+                    'comment': result.comment,
+                    'journal_ref': result.journal_ref,
+                    'doi': result.doi
+                }
+                papers.append(paper_info)
+
+            if not papers:
+                return ProcessResponse(code=205, message=["No papers found matching the search criteria."])
+
+            logging.info(f"找到 {len(papers)} 篇相关论文")
+            return ProcessResponse(code=200, message=papers)
+
+        except Exception as e:
+            logging.error(f"arXiv搜索出错: {e}")
+            return ProcessResponse(code=503, message=[f"Error searching arXiv: {str(e)}"])

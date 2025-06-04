@@ -83,7 +83,7 @@ def search_github_api():
         return jsonify({"code": 400, "message": ["Keywords list cannot be empty."]}), 400
 
     # Use the global llm_agent instance
-    response_data: ProcessResponse = llm_agent.search_keyword(
+    response_data: ProcessResponse = llm_agent.search_github(
         keywords=search_params.keywords,
         language=search_params.language,
         min_stars=search_params.min_stars,
@@ -91,6 +91,37 @@ def search_github_api():
         updated_after=search_params.updated_after,
         exclude_forks=search_params.exclude_forks
     )
+    return jsonify(response_data.model_dump())
+
+@app.route('/api/search_arxiv', methods=['POST'])
+def search_arxiv_api():
+    """
+    API endpoint for arXiv paper search.
+    Takes JSON matching AdvancedSearchRequest model (only uses keywords field).
+    Returns JSON: ProcessResponse structure containing paper information.
+    """
+    try:
+        json_data = request.get_json()
+        if not json_data:
+            return jsonify({"code": 400, "message": ["Bad Request: No JSON data received."]}), 400
+
+        # Validate input using Pydantic model
+        search_params = AdvancedSearchRequest(**json_data)
+    except ValidationError as e:
+        logging.error(f"Validation error for search_arxiv: {e.errors()}")
+        error_messages = [f"{err['loc'][0] if err['loc'] else 'input'}: {err['msg']}" for err in e.errors()]
+        return jsonify({"code": 422, "message": error_messages}), 422
+    except Exception as e:
+        logging.error(f"Error parsing request for search_arxiv: {e}")
+        return jsonify({"code": 400, "message": [f"Bad Request: {str(e)}"]}), 400
+
+    logging.info(f"API /search_arxiv: Keywords: {search_params.keywords}")
+
+    if not search_params.keywords:
+        return jsonify({"code": 400, "message": ["Keywords list cannot be empty."]}), 400
+
+    # Use the global llm_agent instance
+    response_data: ProcessResponse = llm_agent.search_arxiv(keywords=search_params.keywords)
     return jsonify(response_data.model_dump())
 
 if __name__ == '__main__':

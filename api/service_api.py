@@ -31,7 +31,7 @@ async def search_github_advanced(search_params: AdvancedSearchRequest) -> Proces
         raise HTTPException(status_code=400, detail="Keywords list cannot be empty.")
 
     agent = Agent()
-    response = agent.search_keyword(
+    response = agent.search_github(
         keywords=search_params.keywords,
         language=search_params.language,
         min_stars=search_params.min_stars,
@@ -39,4 +39,20 @@ async def search_github_advanced(search_params: AdvancedSearchRequest) -> Proces
         updated_after=search_params.updated_after,
         exclude_forks=search_params.exclude_forks
     )
+    return response
+
+@router.post("/api/search_arxiv", response_model=ProcessResponse)
+async def search_arxiv(search_params: AdvancedSearchRequest) -> ProcessResponse:
+    """
+    API endpoint for arXiv paper search.
+    Takes JSON matching AdvancedSearchRequest model (only uses keywords field).
+    Returns JSON: ProcessResponse structure containing paper information.
+    """
+    logging.info(f"arXiv search request: Keywords: {search_params.keywords}")
+    
+    if not search_params.keywords:
+        raise HTTPException(status_code=400, detail="Keywords list cannot be empty.")
+
+    agent = Agent()
+    response = agent.search_arxiv(keywords=search_params.keywords)
     return response

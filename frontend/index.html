@@ -1,72 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Awesome Agent Search</title>
+    <title>学术资源搜索</title>
     <link rel="stylesheet" href="style.css">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <!-- Optional: Add a favicon -->
     <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
 </head>
 <body>
     <div class="container">
         <header class="app-header">
-            <h1>GitHub Repository Search</h1>
-            <button id="themeToggleButton" class="theme-toggle-button">Toggle Theme</button>
+            <h1>学术资源搜索</h1>
+            <button id="themeToggleButton" class="theme-toggle-button">切换主题</button>
         </header>
 
         <div class="input-section">
-            <h2>1. Describe Your Desired Repository</h2>
-            <textarea id="textInput" placeholder="e.g., a lightweight python web framework with async support and good documentation"></textarea>
-            <button id="getKeywordsButton">Get Keywords & Suggestions</button>
-            <div id="keywordsLoadingIndicator" class="loading-indicator" style="display: none;">Fetching keywords...</div>
+            <h2>描述您的研究内容</h2>
+            <textarea id="textInput" placeholder="例如：一个轻量级的Python异步Web框架，具有良好的文档支持和性能"></textarea>
+            <button id="getKeywordsButton">获取关键词和建议</button>
+            <div id="keywordsLoadingIndicator" class="loading-indicator" style="display: none;">正在获取关键词...</div>
         </div>
 
-        <div id="keywordManagementSection" style="display: none;">
-            <h2>2. Refine Keywords</h2>
+        <div id="searchSection" class="search-section" style="display: none;">
+            <h2>搜索设置</h2>
             <div class="keywords-area">
-                <label for="primaryKeywordsInput">Primary Keywords (edit as needed):</label>
-                <input type="text" id="primaryKeywordsInput" placeholder="Keywords, comma-separated">
+                <label for="primaryKeywordsContainer">主要关键词：</label>
+                <div id="primaryKeywordsContainer" class="keywords-container"></div>
+                <input type="hidden" id="primaryKeywordsInput">
             </div>
             <div id="suggestedKeywordsArea" class="suggested-keywords-area">
-                <label>Suggested Keywords (click to add):</label>
+                <label>建议的关键词（点击添加）：</label>
                 <div id="suggestedKeywordsContainer"></div>
             </div>
-        </div>
-
-        <div id="advancedSearchSection" style="display: none;">
-            <h2>3. Advanced Search Filters</h2>
-            <div class="filters-grid">
-                <div>
-                    <label for="languageInput">Programming Language:</label>
-                    <input type="text" id="languageInput" placeholder="e.g., python, javascript">
-                </div>
-                <div>
-                    <label for="minStarsInput">Min Stars:</label>
-                    <input type="number" id="minStarsInput" placeholder="e.g., 100">
-                </div>
-                <div>
-                    <label for="maxStarsInput">Max Stars:</label>
-                    <input type="number" id="maxStarsInput" placeholder="e.g., 5000">
-                </div>
-                <div>
-                    <label for="updatedAfterInput">Updated After (YYYY-MM-DD):</label>
-                    <input type="text" id="updatedAfterInput" placeholder="e.g., 2023-01-01">
-                </div>
-                <div class="checkbox-filter">
-                    <input type="checkbox" id="excludeForksCheckbox">
-                    <label for="excludeForksCheckbox">Exclude Forks</label>
-                </div>
+            <div class="date-filter">
+                <label for="updatedAfterInput">更新时间（YYYY-MM-DD）：</label>
+                <input type="text" id="updatedAfterInput" placeholder="例如：2023-01-01">
             </div>
-            <button id="searchGitHubButton">Search GitHub</button>
-            <div id="searchLoadingIndicator" class="loading-indicator" style="display: none;">Searching GitHub...</div>
+            <button id="searchButton" class="search-button">开始搜索</button>
+            <div id="searchLoadingIndicator" class="loading-indicator" style="display: none;">正在搜索...</div>
         </div>
         
-        <h2>Results:</h2>
-        <div id="resultsArea">
-            <p>Enter a description and get keywords to start.</p>
+        <div id="resultsContainer" class="results-container" style="display: none;">
+            <div class="results-column">
+                <h2>GitHub 仓库</h2>
+                <div id="githubResultsArea" class="results-area">
+                    <p>正在搜索...</p>
+                </div>
+            </div>
+            <div class="results-column">
+                <h2>arXiv 论文</h2>
+                <div id="arxivResultsArea" class="results-area">
+                    <p>正在搜索...</p>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
