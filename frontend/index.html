@@ -30,6 +30,10 @@
                 <label for="primaryKeywordsContainer">主要关键词：</label>
                 <div id="primaryKeywordsContainer" class="keywords-container"></div>
                 <input type="hidden" id="primaryKeywordsInput">
+                <div class="custom-keyword-input">
+                    <input type="text" id="customKeywordInput" placeholder="添加自定义关键词">
+                    <button id="addCustomKeywordButton">添加</button>
+                </div>
             </div>
             <div id="suggestedKeywordsArea" class="suggested-keywords-area">
                 <label>建议的关键词（点击添加）：</label>
@@ -44,14 +48,18 @@
         </div>
         
         <div id="resultsContainer" class="results-container" style="display: none;">
-            <div class="results-column">
-                <h2>GitHub 仓库</h2>
+            <div class="results-header">
+                <h2>搜索结果</h2>
+                <button id="exportResultsButton" class="export-button">导出结果</button>
+            </div>
+            <div class="results-section">
+                <h3>GitHub 仓库</h3>
                 <div id="githubResultsArea" class="results-area">
                     <p>正在搜索...</p>
                 </div>
             </div>
-            <div class="results-column">
-                <h2>arXiv 论文</h2>
+            <div class="results-section">
+                <h3>arXiv 论文</h3>
                 <div id="arxivResultsArea" class="results-area">
                     <p>正在搜索...</p>
                 </div>
