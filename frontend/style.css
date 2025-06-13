@@ -110,18 +110,19 @@ h2 {
 textarea, input[type="text"], input[type="number"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
     border: 1px solid var(--input-border-color);
+    border-radius: 2px;
     background-color: var(--input-bg-color);
     color: var(--text-color);
-    border-radius: 4px;
-    box-sizing: border-box; /* Important for width 100% */
-    font-size: 1em;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-size: 16px;
+    transition: border-color 0.3s;
 }
+
 textarea#textInput { /* Specific to initial textarea */
-    min-height: 80px;
+    min-height: 120px;
     resize: vertical;
+    box-sizing: border-box; /* 确保内边距和边框包含在宽度内 */
+    max-width: 100%; /* 确保不超出父容器 */
 }
 
 button {
@@ -369,8 +370,7 @@ label {
 }
 
 .search-section .date-filter input {
-    width: auto;
-    flex: 1;
+    flex: none;
 }
 
 .search-button {
@@ -644,4 +644,184 @@ body.dark-mode .readme-content th {
 .repo-readme,
 .readme-content {
     /* 这些样式不再需要，但为了避免CSS错误，保留选择器但清空内容 */
+}
+
+/* 深色模式样式 */
+.dark-mode textarea, 
+.dark-mode input[type="text"], 
+.dark-mode input[type="number"],
+.dark-mode input[type="date"] {
+    background-color: var(--dark-input-bg-color);
+    border-color: var(--dark-input-border-color);
+    color: var(--dark-text-color);
+}
+
+/* 为日期选择器的日历下拉部分添加深色模式支持 */
+.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+/* 使用伪元素显示日期输入框的提示文字 */
+input[type="date"]:not(:focus):not([value=""])::-webkit-datetime-edit,
+input[type="date"]:not([value=""])::-webkit-datetime-edit,
+input[type="date"]:focus::-webkit-datetime-edit,
+input[type="date"]:empty:before,
+input[type="date"]:invalid::-webkit-datetime-edit,
+input[type="date"]:not([value]):before {
+    /* 移除这些规则 */
+    content: none;
+}
+
+/* 单独设置日期输入框的样式，避免被上面的规则覆盖 */
+input[type="date"] {
+    width: 160px !important;
+    max-width: 160px !important;
+    box-sizing: border-box !important;
+    padding: 8px !important;
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+    font-family: inherit;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+}
+
+/* 深色模式下的日期选择器 */
+.dark-mode input[type="date"] {
+    background-color: var(--input-bg-color);
+    border-color: var(--input-border-color);
+    color: var(--text-color);
+}
+
+/* 日期选择器图标 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
+/* 为日期选择器的日历下拉部分添加深色模式支持 */
+.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+/* 自定义日期输入框样式 */
+.custom-date-input {
+    width: 160px;
+    padding: 8px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+    font-family: inherit;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* 隐藏默认的日期选择器外观 */
+.custom-date-input::-webkit-datetime-edit { 
+    color: #888; /* 未选择日期时的颜色 */
+}
+
+/* 当有值时显示正常颜色 */
+.custom-date-input:not(:placeholder-shown)::-webkit-datetime-edit {
+    color: var(--text-color);
+}
+
+/* 自定义日期选择器的各个部分 */
+.custom-date-input::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+}
+
+.custom-date-input::-webkit-datetime-edit-text {
+    padding: 0 2px;
+}
+
+/* 未选择日期时显示提示文字 */
+.custom-date-input:not(:focus):not(:valid)::before {
+    content: "请选择日期";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+}
+
+/* 自定义日历图标 */
+.custom-date-input::-webkit-calendar-picker-indicator {
+    background-color: transparent;
+    cursor: pointer;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* 深色模式样式 */
+.dark-mode .custom-date-input {
+    background-color: var(--dark-input-bg-color);
+    border-color: var(--dark-input-border-color);
+    color: var(--dark-text-color);
+}
+
+.dark-mode .custom-date-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+/* 确保日期输入框的值为空时不显示默认的yyyy/mm/dd */
+.custom-date-input:invalid {
+    color: transparent;
+}
+.custom-date-input:focus:invalid {
+    color: var(--text-color);
+}
+
+/* 自定义日期输入框样式 */
+.date-wrapper {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+}
+
+.date-text-input {
+    width: 140px !important;
+    padding: 8px !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 4px !important;
+    font-family: inherit !important;
+    background-color: var(--input-bg-color) !important;
+    color: var(--text-color) !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+}
+
+.calendar-button {
+    position: absolute;
+    right: 8px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-button:hover {
+    color: var(--button-bg-color);
+    background: transparent;
+}
+
+/* 深色模式样式 */
+.dark-mode .date-text-input {
+    background-color: var(--dark-input-bg-color);
+    border-color: var(--dark-input-border-color);
+    color: var(--dark-text-color);
+}
+
+.dark-mode .calendar-button {
+    color: var(--dark-text-color);
+}
+
+.dark-mode .calendar-button:hover {
+    color: var(--button-bg-color);
 }
