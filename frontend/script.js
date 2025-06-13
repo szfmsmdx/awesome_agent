@@ -191,13 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // 获取日期值，如果未选择则为空字符串
         const updatedAfter = updatedAfterInput.value.trim();
-        if (updatedAfter && !/^\d{4}-\d{2}-\d{2}$/.test(updatedAfter)) {
-            displayError(githubResultsArea, '更新时间格式无效。请使用 YYYY-MM-DD 格式。');
-            displayError(arxivResultsArea, '更新时间格式无效。请使用 YYYY-MM-DD 格式。');
-            return;
-        }
-
+        
         searchLoadingIndicator.style.display = 'block';
         resultsContainer.style.display = 'block';
         githubResultsArea.innerHTML = '<p>正在搜索...</p>';
